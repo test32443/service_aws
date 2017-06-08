@@ -23,14 +23,14 @@ except:
 def handler(event, context):
 
     try:
-        parsedurl = urlparse((event['url'])).hostname
-        if parsedurl != None:
+        parsedUrl = urlparse((event['url'])).hostname
+        if parsedUrl is not None:
             with conn.cursor() as cur:
-                cur.execute("insert into Domains (domainid,count) values (%s,1) on duplicate key update count = count + 1", (parsedurl))
+                cur.execute("insert into Domains (domainid,count) values (%s,1) on duplicate key update count = count + 1", (parsedUrl))
                 conn.commit()
                 cur.close()
 
-                return "Updated counter for domain %s" % (parsedurl)
+                return "Updated counter for domain %s" % parsedUrl
         else:
             return "No domain name found"
     except:
